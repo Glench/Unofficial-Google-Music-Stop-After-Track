@@ -6,5 +6,4 @@ A simple Chrome extension to add a "Stop After This Track" button to Google Musi
 ![Stop After Track Screenshot](stop-after-track.png)
 
 
-[Download for Google Chrome](https://chrome.google.com/webstore/detail/stop-after-track-for-goog/kgalkndhmgoedfdmegjjmdnkmcaomnim)
-----------------------------------------------------------------------------------------------------------------------------------
+###[Download for Google Chrome](https://chrome.google.com/webstore/detail/stop-after-track-for-goog/kgalkndhmgoedfdmegjjmdnkmcaomnim)
