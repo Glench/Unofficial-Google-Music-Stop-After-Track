@@ -45,7 +45,7 @@ $(document).on('ready', function() {
         // add checkmark
         $subdiv.prepend('&#10003; ');
 
-        // start checking for if we should pause the track
+        // when audio ends, intercept and prevent event
         document.getElementsByTagName("audio")[0].parentNode.addEventListener("ended", trackDone, true);
         interval = setInterval(checkChangedTrack, 500);
     };
@@ -75,7 +75,7 @@ $(document).on('ready', function() {
         // pause html 5 player
         this.firstChild.pause();
         event.stopImmediatePropagation();
-        // sync UI with player state
+        // sync UI with audio player state
         $('[data-id="play-pause"]').click();
         disableStop();
     };
