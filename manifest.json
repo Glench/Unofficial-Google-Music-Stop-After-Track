@@ -1,0 +1,45 @@
+{
+
+  "name": "Google Music Stop After Track",
+  "version": "0.1",
+  "description": "Automatically stop Google Music when current track is done.",
+  "default_locale": "en",
+
+
+  //============================================================================
+  // PERMISSIONS
+  //============================================================================
+
+  // http://code.google.com/chrome/extensions/manifest.html#permissions
+  "permissions": [
+    "bookmarks", // http://code.google.com/chrome/extensions/bookmarks.html
+    "chrome://favicon/",
+    "clipboardRead", // document.execCommand('paste').
+    "clipboardWrite", // document.execCommand('copy' OR 'cut')
+    "contextMenus", //http:///code.google.com/chrome/extensions/contextMenus.html
+    "cookies", // http://code.google.com/chrome/extensions/cookies.html
+    // "experimental", // http://code.google.com/chrome/extensions/dev/experimental.html
+    "fileBrowserHandler", // http://goo.gl/GqbrP
+    "geolocation", // http://dev.w3.org/geo/api/spec-source.html
+    "history", // http://code.google.com/chrome/extensions/history.html
+    "idle", // http://code.google.com/chrome/extensions/idle.html
+    "management", // http://code.google.com/chrome/extensions/management.html
+    "notifications", // code.google.com/chrome/extensions/notifications.html
+    "tabs", // http://code.google.com/chrome/extensions/tabs.html +windows.html
+    "tts", // http://code.google.com/chrome/extensions/tts.html
+    "ttsEngine", // http://code.google.com/chrome/extensions/ttsEngine.html
+    "unlimitedStorage"
+  ],
+
+  // http://code.google.com/chrome/extensions/content_scripts.html
+  "content_scripts": [
+    {
+      "matches": ["*://play.google.com/music/*"],
+      "css": [],
+      "js": ["lib/jquery.min.js", "src/google-music-stop-after-track.js"]
+    }
+  ],
+
+  // The new mandatory manifest version
+  "manifest_version": 2
+}
