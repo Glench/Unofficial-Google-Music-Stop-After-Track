@@ -14,7 +14,7 @@ $(document).on('ready', function() {
 
             // inject custom menu item into DOM
 
-            $('.now-playing-menu').append('<div class="goog-menuitem" role="menuitem" style="-webkit-user-select: none;" id="stop-after-track"><div class="goog-menuitem-content" style="-webkit-user-select: none;">Pause after this track</div></div>');
+            $('.now-playing-menu').append('<div class="goog-menuitem" role="menuitem" style="-webkit-user-select: none;" id="stop-after-track"><div class="goog-menuitem-content" style="-webkit-user-select: none;">Stop after this track</div></div>');
 
             // set up hover states for menu item
 
@@ -54,7 +54,7 @@ $(document).on('ready', function() {
         var $subdiv = $stopAfterTrack.find('div');
         shouldStop = false;
         stopAfterTrack = null;
-        $subdiv.text('Pause after this track');
+        $subdiv.text('Stop after this track');
         document.getElementsByTagName("audio")[0].parentNode.removeEventListener("ended", trackDone, true);
         clearInterval(interval);
     };
@@ -68,37 +68,8 @@ $(document).on('ready', function() {
 
 
     // helper functions
-    var fixedParseInt = function(str) {
-        return parseInt(str, 10);
-    };
-    var convertTimeStringToSeconds = function(text) {
-        // converts 1:00:29 to seconds
-        var split = $.map(text.split(':'), fixedParseInt);
-        if (split.length === 2) {
-            // hours, minutes
-            return 60*split[0] + split[1];
-        } else {
-            // h, m, s
-            return 60*60*split[0] + 60*split[1] + split[2];
-        }
-    };
-    var getCurrentTime = function() {
-        return convertTimeStringToSeconds($('#time_container_current').text());
-    };
-    var getTotalTime = function() {
-        return convertTimeStringToSeconds($('#time_container_duration').text());
-    };
     var getCurrentTrack = function() {
         return $('#playerSongInfo').text();
-    };
-    var isPlaying = function() {
-        var $playPauseButton = $('[data-id="play-pause"]');
-        var disabledattr = $playPauseButton.attr('disabled');
-        return ($playPauseButton.hasClass('playing') &&
-        typeof attr === 'undefined');
-    };
-    var trackIsDone = function() {
-        return shouldStop && isPlaying() && getCurrentTrack() !== stopAfterTrack;
     };
     var trackDone = function () {
         // pause html 5 player
@@ -113,4 +84,4 @@ $(document).on('ready', function() {
             disableStop();
         }
     };
-})
+});
