@@ -14,7 +14,7 @@ $(document).on('ready', function() {
 
             // inject custom menu item into DOM
 
-            $('.now-playing-menu').append('<div class="goog-menuitem" role="menuitem" style="-webkit-user-select: none;" id="stop-after-track"><div class="goog-menuitem-content" style="-webkit-user-select: none;">Stop after this track</div></div>');
+            $('.now-playing-menu').append('<div class="goog-menuseparator" style="-webkit-user-select: none;" role="separator" id=":6" aria-hidden="false"></div> <div class="goog-menuitem" role="menuitem" style="-webkit-user-select: none;" id="stop-after-track"><div class="goog-menuitem-content" style="-webkit-user-select: none;">Stop after this track</div></div>');
 
             // set up hover states for menu item
 
