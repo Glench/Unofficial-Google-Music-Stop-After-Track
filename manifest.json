@@ -1,7 +1,7 @@
 {
 
   "name": "Google Music Stop After Track",
-  "version": "0.1",
+  "version": "1.0.0",
   "description": "Automatically stop Google Music when current track is done.",
   "default_locale": "en",
 
