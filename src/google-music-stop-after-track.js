@@ -9,12 +9,12 @@ $(document).on('ready', function() {
     var interval = null;
     var setup = function() {
         // setup after loading bar exists and now playing gets made
-
-        if ($('#loading-progress').css('display') === 'none' && $('.now-playing-menu').length !== 0) {
+        var $loadingScreen = $('#loading-progress')
+        if ($('#loading-progress').length == 0 && $('.song-menu').length > 0) {
 
             // inject custom menu item into DOM
 
-            $('.now-playing-menu').append('<div class="goog-menuseparator" style="-webkit-user-select: none;" role="separator" id=":6" aria-hidden="false"></div> <div class="goog-menuitem" role="menuitem" style="-webkit-user-select: none;" id="stop-after-track"><div class="goog-menuitem-content" style="-webkit-user-select: none;">Stop after this track</div></div>');
+            $('.song-menu').append('<div class="goog-menuseparator" style="-webkit-user-select: none;" role="separator" id=":6" aria-hidden="false"></div> <div class="goog-menuitem" role="menuitem" style="-webkit-user-select: none;" id="stop-after-track"><div class="goog-menuitem-content" style="-webkit-user-select: none;">Stop after this track</div></div>');
 
             // set up hover states for menu item
 
@@ -34,6 +34,7 @@ $(document).on('ready', function() {
     // state variables
     var shouldStop = false;
     var stopAfterTrack = null;
+    var oldVolume = null;
 
 
     // main functions
@@ -45,9 +46,7 @@ $(document).on('ready', function() {
         // add checkmark
         $subdiv.prepend('&#10003; ');
 
-        // when audio ends, intercept and prevent event
-        document.getElementsByTagName("audio")[0].parentNode.addEventListener("ended", trackDone, true);
-        interval = setInterval(checkChangedTrack, 500);
+        interval = setInterval(checkChangedTrack, 30);
     };
     var disableStop = function() {
         var $stopAfterTrack = $('#stop-after-track');
@@ -55,7 +54,7 @@ $(document).on('ready', function() {
         shouldStop = false;
         stopAfterTrack = null;
         $subdiv.text('Stop after this track');
-        document.getElementsByTagName("audio")[0].parentNode.removeEventListener("ended", trackDone, true);
+        // document.getElementsByTagName("audio")[0].removeEventListener("ended", trackDone, true);
         clearInterval(interval);
     };
     var toggleStopAfterTrack = function(evt) {
@@ -69,19 +68,36 @@ $(document).on('ready', function() {
 
     // helper functions
     var getCurrentTrack = function() {
-        return $('#playerSongInfo').text();
-    };
-    var trackDone = function () {
-        // pause html 5 player
-        this.firstChild.pause();
-        event.stopImmediatePropagation();
-        // sync UI with audio player state
-        $('[data-id="play-pause"]').click();
-        disableStop();
-    };
-    var checkChangedTrack = function() {
-        if (getCurrentTrack() != stopAfterTrack) {
-            disableStop();
+        var $songInfo = $('#playerSongInfo')
+        if ($songInfo.css('display') === 'none') {
+            return ''
         }
+        return $songInfo.text();
+    };
+    var pressPauseButton = function() {
+        var $playPauseButton = $('[data-id="play-pause"]')
+        // once button is enabled, click it
+        if ($playPauseButton.attr('aria-disabled') == 'false') {
+            $playPauseButton.click();
+            $('audio').get(0).volume = oldVolume;
+            disableStop();
+            return;
+        }
+        setTimeout(pressPauseButton, 30)
+    }
+    var checkChangedTrack = function() {
+        var currentTrack = getCurrentTrack();
+        if (currentTrack != stopAfterTrack) {
+            disableStop();
+
+            // I made currentTrack the empty string when user reaches end of playlist
+            if (currentTrack !== '') {
+                var audio = $('audio').get(0);
+                oldVolume = audio.volume;
+                audio.volume = 0;
+                setTimeout(pressPauseButton, 30)
+            }
+        }
+
     };
 });
